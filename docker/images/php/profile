@@ -1,0 +1,22 @@
+export CHARSET=UTF-8
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/vendor/bin
+export PAGER=less
+export PS1='\h:\w\$ '
+export EDITOR=vim
+umask 022
+
+for script in /etc/profile.d/*.sh ; do
+        if [ -r $script ] ; then
+                . $script
+        fi
+done
+
+
+
+# Alias definitions.
+#
+alias df='df -h'
+alias du='du -h'
+alias ls='ls -p'
+alias ll='ls -l'
+alias la='ls -la'
