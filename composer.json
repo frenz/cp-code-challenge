@@ -4,13 +4,18 @@
     "license": "proprietary",
     "require": {
         "php": "^7.4",
+        "ext-amqp": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.10",
+        "phpdocumentor/reflection-docblock": "^5.2",
         "symfony/console": "*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
         "symfony/messenger": "*",
+        "symfony/property-access": "4.2.*",
+        "symfony/property-info": "4.2.*",
+        "symfony/serializer": "4.2.*",
         "symfony/yaml": "*"
     },
     "require-dev": {
