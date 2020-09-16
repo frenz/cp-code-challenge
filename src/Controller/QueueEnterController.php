@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Message\QueueMessage;
+use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -22,7 +23,26 @@ class QueueEnterController extends AbstractController
 
     public function __invoke(): JsonResponse
     {
-        $this->messageBus->dispatch(new QueueMessage('bar'));
-        return $this->json(['foo' => 'bar']);
+        $token = $this->getJWTToken();
+        $this->messageBus->dispatch(new QueueMessage($token));
+        return $this->json(['token' => $token]);
+    }
+
+    /**
+     * @return string
+     */
+    private function getJWTToken(): string
+    {
+        /* creating access token */
+        $issuedAt = time();
+        // jwt valid for 12 hours (24 hours * 60 days)
+        $expirationTime = $issuedAt + 24 * 60;
+        $payload = array(
+            'iat' => $issuedAt,
+            'exp' => $expirationTime,
+        );
+        $key = $this->getParameter('app.jwt_key');
+        $token = JWT::encode($payload, $key);
+        return $token;
     }
 }
