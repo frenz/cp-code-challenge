@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.10",
+        "firebase/php-jwt": "^5.2",
         "phpdocumentor/reflection-docblock": "^5.2",
         "symfony/console": "*",
         "symfony/flex": "^1.1",
