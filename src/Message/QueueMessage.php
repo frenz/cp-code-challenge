@@ -9,15 +9,15 @@ final class QueueMessage
  * data for this message class.
  */
 
-     private $name;
+     private $token;
 
-     public function __construct(string $name)
+     public function __construct(string $token)
      {
-         $this->name = $name;
+         $this->token = $token;
      }
 
-    public function getName(): string
+    public function getToken(): string
     {
-        return $this->name;
+        return $this->token;
     }
 }

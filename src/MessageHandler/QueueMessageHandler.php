@@ -9,7 +9,7 @@ final class QueueMessageHandler implements MessageHandlerInterface
 {
     public function __invoke(QueueMessage $message)
     {
-        var_dump($message->getName());
+        var_dump($message->getToken());
         die;
     }
 }
