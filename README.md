@@ -1,24 +1,27 @@
-Hi potential awesome Centralpoint employee and welcome to the Centralpoint Development code challenge. 
+# Flash purchasing shopping API 
+### A User can purchase ONE product for ONE quantity and only for ONE hour. 
 
-In this challenge we would like to see how you handle an assigment that was given by the stakeholders in this case the marketing team. 
+## Requirements
 
-The actual assignment will be described down here but first some practical things:
-* To start off for this challenge we would like to see all you commits submitted.
-* Also when finished we expect a pull request.
-* This is an online challenge so we give you a full week to finish this, so you can arrange this with your other priorities you might have. So no rush challenge for 1 day. If your done faster probs to you!
-* After finishing the challenge we will do a code review. 
-* The code review will be then discussed with you in a short online call or in our premises in which you will be requested to demo this new feature.
+* **Docker**
+* **Docker Compose**
+* **GIT client**
 
-If you have any questions don't hesitate to contact Konstantinos (lead backend) on konstantinos.maounis@centralpoint.eu 
-We wish you good luck and do your best.
-
-Cheers,
-
-Team Development
-
-----------------------------------------------------------------------------------------------------------------
-
-Our marketing team wants to us to develop a new purchasing shopping experience  in which a user enters a queue and then can purchase  ONE product for ONE quantity and only for ONE hour. 
+## Docker 
+```shell
+git@github.com:dev-centralpoint/cp-code-challenge-Giuseppe.git
+cd !$
+docker-compose up --abort-on-container-exit
+```
+or
+```
+docker-compose down &&  docker-compose build  && docker-compose up --abort-on-container-exit
+```
+### Start messenger:consume-messages
+```shell
+ ❯❯❯ docker-compose exec php ash
+288433f0195b:/var/www# bin/console messenger:consume-messages
+```
 
 Make an API application using
 * Symfony
