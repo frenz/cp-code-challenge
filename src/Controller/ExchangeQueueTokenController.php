@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -22,7 +22,7 @@ class ExchangeQueueTokenController extends AbstractController
 
     public function __invoke(Request $request): JsonResponse
     {
-         $body = json_decode($request->getContent()) ?? [];
+        $body = json_decode($request->getContent()) ?? [];
         $token = $body->queue_token;
         $purchaseToken = $this->queueTokenExchanger->exchangeForPurchaseToken($token);
         return $this->json(['purchase_token' => $purchaseToken]);

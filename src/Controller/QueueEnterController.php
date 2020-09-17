@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/queue/enter", name="queue_enter")
+ * @Route("/queue/enter", name="queue_enter", methods={"GET"}))
  */
 class QueueEnterController extends AbstractController
 {
