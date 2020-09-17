@@ -19,6 +19,7 @@ RUN apk add --update --no-cache \
     sudo \
     mysql-client \
     rabbitmq-c-dev \
+    && docker-php-ext-install mysqli pdo pdo_mysql \
     && pecl install amqp \
     && docker-php-ext-enable amqp
 
