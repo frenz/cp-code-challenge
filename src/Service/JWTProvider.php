@@ -21,30 +21,38 @@ class JWTProvider
             'PT_AUDIENCE' => getenv('JWT_PT_AUDIENCE')];
     }
 
-    public function validateQueueToken(string $queueToken): void
+    public function validateQueueToken(string $queueToken): bool
     {
-        self::validateJWTToken($queueToken, $this->config['QT_KEY']);
+        $result = $this->validateJWTToken($queueToken, $this->config['QT_KEY']);
+        if (isset($result->iss) && $result->iss === $this->config['QT_ISSUER']) {
+            return true;
+        }
+        return false;
     }
 
-    private function validateJWTToken(string $token, string $key): void
+    private function validateJWTToken(string $token, string $key): object
     {
         try {
-            JWT::decode($token, $key, [$this->config['JWT_ALGORITHM']]);
+            return JWT::decode($token, $key, [$this->config['ALGORITHM']]);
         } catch (ExpiredException $exception) {
             throw $exception;
         }
     }
 
-    public function validatePurchaseToken(string $purchaseToken): void
+    public function validatePurchaseToken(string $purchaseToken): bool
     {
-        self::validateJWTToken($purchaseToken, $this->config['PT_KEY']);
+        $result = $this->validateJWTToken($$purchaseToken, $this->config['PT_KEY']);
+        if (isset($result->iss) && $result->iss === $this->config['PT_ISSUER']) {
+            return true;
+        }
+        return false;
     }
 
     public function createQueueToken(): string
     {
         $payload = $this->getPayload($this->config['QT_ISSUER'], $this->config['QT_AUDIENCE']);
 
-        return JWT::encode($payload, $this->config['QT_KEY'],);
+        return JWT::encode($payload, $this->config['QT_KEY'], $this->config['ALGORITHM']);
     }
 
     private function getPayload(string $issuer, string $audience): array
