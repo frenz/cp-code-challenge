@@ -19,4 +19,9 @@ class QueuePurchaseTokenRepository extends ServiceEntityRepository
         parent::__construct($registry, QueuePurchaseToken::class);
     }
 
+    public function findByQueueToken(string $queueToken): ?QueuePurchaseToken
+    {
+        return $this->findOneBy(['queueToken' => $queueToken]);
+    }
+
 }
