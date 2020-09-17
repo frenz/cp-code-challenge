@@ -1,14 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\QueuePurchaseTokensRepository;
+use App\Repository\QueuePurchaseTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=QueuePurchaseTokensRepository::class)
+ * @ORM\Entity(repositoryClass=QueuePurchaseTokenRepository::class)
  */
-class QueuePurchaseTokens
+class QueuePurchaseToken
 {
     /**
      * @ORM\Id
