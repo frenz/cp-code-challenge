@@ -27,7 +27,7 @@ class QueueEnterController extends AbstractController
     {
         $token = $this->JWTProvider->createQueueToken();
         $this->messageBus->dispatch(new QueueTokenMessage($token));
-        return $this->json(['queueToken' => $token]);
+        return $this->json(['queue_token' => $token]);
     }
 
 }
