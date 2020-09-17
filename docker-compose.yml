@@ -23,25 +23,38 @@ services:
                 COMPOSER: 1
                 XDEBUG: 1
         container_name: cp_php
-
         working_dir: /var/www
         environment:
             PHP_IDE_CONFIG: serverName=cp-code-challenge-Giuseppe
             PHP_EXTENSION_XDEBUG: "true"
+            DB_NAME: db_name
+            DB_USER: db_user
+            DB_PASSWORD: db_password
+            DB_HOST: db
+            DB_PORT: 3306
         volumes:
             - .:/var/www
             - logs:/var/www/logs
         networks:
             - CP_ASSIGNMENT
     db:
-        image: mariadb:10
+        build:
+           context: ./docker/images/db/
+           dockerfile: Dockerfile
         container_name: cp_db
         environment:
-            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_ROOT_PASSWORD=toor
+            - MYSQL_DATABASE=db_name
+            - MYSQL_USER=db_user
+            - MYSQL_PASSWORD=db_password
+        depends_on:
+            - nginx
         volumes:
+#            - ./docker/images/db/init:/docker-entrypoint-initdb.d
             - volume_db:/var/lib/mysql:cached
-        ports:
-            - "3311:3306"
+        expose:
+            - "3306"
+        restart: always
         networks:
             - CP_ASSIGNMENT
     rabbitmq:
@@ -51,6 +64,21 @@ services:
             - "15672:15672"
         volumes:
             - volume_rabbitmq:/var/lib/rabbitmq:cached
+        networks:
+            - CP_ASSIGNMENT
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        container_name: cp_pma
+        ports:
+            - 8181:80
+        environment:
+            MYSQL_USERNAME: db_name
+            MYSQL_ROOT_PASSWORD: toor
+            PMA_HOST: "db"
+            PMA_PORT: 3306
+        depends_on:
+            - db
         networks:
             - CP_ASSIGNMENT
 volumes:

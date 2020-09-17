@@ -27,6 +27,9 @@ usermod -s /bin/ash www-data
 chown www-data:users -R ${APP_ROOT}
 sed -i 's/root.*/root ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
 sudo -u www-data sh -c '\
-    COMPOSER_MEMORY_LIMIT=-1 composer install'
+    COMPOSER_MEMORY_LIMIT=-1 	composer install --no-interaction --no-scripts || true && \
+	export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var:/var/www/html/vendor/bin && \
+	yes | bin/console doc:mig:mig || true ; \
+	'
 
 exec "$@"
