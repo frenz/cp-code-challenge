@@ -21,7 +21,7 @@ class JWTProvider
             'PT_AUDIENCE' => getenv('JWT_PT_AUDIENCE')];
     }
 
-    public function validateQtToken(string $queueToken): void
+    public function validateQueueToken(string $queueToken): void
     {
         self::validateJWTToken($queueToken, $this->config['QT_KEY']);
     }
@@ -35,12 +35,12 @@ class JWTProvider
         }
     }
 
-    public function validatePtToken(string $purchaseToken): void
+    public function validatePurchaseToken(string $purchaseToken): void
     {
         self::validateJWTToken($purchaseToken, $this->config['PT_KEY']);
     }
 
-    public function createQToken(): string
+    public function createQueueToken(): string
     {
         $payload = $this->getPayload($this->config['QT_ISSUER'], $this->config['QT_AUDIENCE']);
 

@@ -3,12 +3,12 @@
 namespace App\MessageHandler;
 
 use App\Entity\QueuePurchaseToken;
-use App\Message\QtTokenMessage;
+use App\Message\QueueTokenMessage;
 use App\Service\JWTProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class QtTokenWorker implements MessageHandlerInterface
+final class QueueTokenWorker implements MessageHandlerInterface
 {
     private EntityManagerInterface $em;
     private JWTProvider $JWTProvider;
@@ -19,7 +19,7 @@ final class QtTokenWorker implements MessageHandlerInterface
         $this->JWTProvider = $JWTProvider;
     }
 
-    public function __invoke(QtTokenMessage $message)
+    public function __invoke(QueueTokenMessage $message)
     {
         $queueToken = $message->getToken();
         $queuePurchaseTokens = new QueuePurchaseToken($queueToken, $this->JWTProvider->createPurchaseToken());

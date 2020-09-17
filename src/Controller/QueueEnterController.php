@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Message\QtTokenMessage;
+use App\Message\QueueTokenMessage;
 use App\Service\JWTProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,9 +25,9 @@ class QueueEnterController extends AbstractController
 
     public function __invoke(): JsonResponse
     {
-        $token = $this->JWTProvider->createQToken();
-        $this->messageBus->dispatch(new QtTokenMessage($token));
-        return $this->json(['token' => $token]);
+        $token = $this->JWTProvider->createQueueToken();
+        $this->messageBus->dispatch(new QueueTokenMessage($token));
+        return $this->json(['queueToken' => $token]);
     }
 
 }

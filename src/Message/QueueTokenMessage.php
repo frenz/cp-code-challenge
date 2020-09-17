@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class QtTokenMessage
+final class QueueTokenMessage
 {
     private string $token;
 
