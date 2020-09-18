@@ -19,9 +19,9 @@
     "symfony/flex": "^1.1",
     "symfony/framework-bundle": "*",
     "symfony/messenger": "*",
-    "symfony/property-access": "4.4.*",
-    "symfony/property-info": "4.4.*",
-    "symfony/serializer": "4.4.*",
+    "symfony/property-access": "*",
+    "symfony/property-info": "*",
+    "symfony/serializer": "*",
     "symfony/yaml": "*"
   },
   "require-dev": {
@@ -72,7 +72,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "4.4.*"
+      "require": "5.*"
     }
   }
 }
