@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Exception\QueuePurchaseTokenNotFoundException;
 use App\Service\QueueTokenExchanger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/queue/exchange-qt-for-pt", name="exchange_queue_token", methods={"POST"}))
+ * @Route("api/queue/exchange-qt-for-pt", name="exchange_queue_token", methods={"POST"}))
  */
-class ExchangeQueueTokenController extends AbstractController
+class QueueExchangeQt4Pt extends AbstractController
 {
     private QueueTokenExchanger $queueTokenExchanger;
 
@@ -24,7 +25,13 @@ class ExchangeQueueTokenController extends AbstractController
     {
         $body = json_decode($request->getContent()) ?? [];
         $token = $body->queue_token;
-        $purchaseToken = $this->queueTokenExchanger->exchangeForPurchaseToken($token);
+        try {
+            $purchaseToken = $this->queueTokenExchanger->exchangeForPurchaseToken($token);
+        } catch (QueuePurchaseTokenNotFoundException $e) {
+            $message = $e->getMessage();
+            return $this->json(['error' => $message], 404);
+
+        }
         return $this->json(['purchase_token' => $purchaseToken]);
     }
 }

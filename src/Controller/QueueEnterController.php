@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/queue/enter", name="queue_enter", methods={"GET"}))
+ * @Route("api/queue/enter", name="queue_enter", methods={"GET"}))
  */
 class QueueEnterController extends AbstractController
 {

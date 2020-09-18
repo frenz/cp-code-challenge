@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/shop/purchase", name="shop_purchase", methods={"POST"}))
+ * @Route("api/shop/purchase", name="shop_purchase", methods={"POST"}))
  */
 class ShopPurchaseController extends AbstractController
 {
