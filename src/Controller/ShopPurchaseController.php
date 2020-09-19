@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Purchase;
+use App\Exception\ProductNotFoundException;
+use App\Exception\ProductOutOfStockException;
+use App\Exception\TokenNotValidException;
 use App\Service\PurchaseProduct;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,10 +28,15 @@ class ShopPurchaseController extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $body = json_decode($request->getContent()) ?? [];
-        $token = $body->queue_token;
-        $productId = (int)$request->get('product_id');
+        $token = $body->purchase_token;
+        $productId = (int)$body->product_id;
 
-        $purchase = $this->purchaseProduct->withNameAndPurchaseToken($token, $productId);
+        try {
+            $purchase = $this->purchaseProduct->withNameAndPurchaseToken($token, $productId);
+        } catch (ProductNotFoundException $e) {
+        } catch (ProductOutOfStockException $e) {
+        } catch (TokenNotValidException $e) {
+        }
 
         return $this->json(['success' => $purchase instanceof Purchase]);
     }
