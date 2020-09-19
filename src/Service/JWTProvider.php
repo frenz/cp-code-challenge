@@ -41,7 +41,7 @@ class JWTProvider
 
     public function validatePurchaseToken(string $purchaseToken): bool
     {
-        $result = $this->validateJWTToken($$purchaseToken, $this->config['PT_KEY']);
+        $result = $this->validateJWTToken($purchaseToken, $this->config['PT_KEY']);
         if (isset($result->iss) && $result->iss === $this->config['PT_ISSUER']) {
             return true;
         }
