@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Unit\Service;
+
 use App\Entity\QueuePurchaseToken;
 use App\Repository\QueuePurchaseTokenRepository;
 use App\Service\JWTProvider;
@@ -24,7 +25,7 @@ class QueueTokenExchangerTest extends TestCase
         $this->assertEquals($result, $purchaseToken);
     }
 
-    function provideQueueTokenAndPurchaseToken()
+    public function provideQueueTokenAndPurchaseToken()
     {
         yield 'test1' => ['JWTQueueToken', 'JWTPurchaseToken'];
         yield 'test2' => ['JWTQueueToken', 'JWTPurchaseToken'];

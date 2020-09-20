@@ -26,5 +26,4 @@ final class QueueTokenWorker implements MessageHandlerInterface
         $this->em->persist($queuePurchaseTokens);
         $this->em->flush();
     }
-
 }

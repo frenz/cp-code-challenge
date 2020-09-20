@@ -37,7 +37,7 @@ class QueueExchangeQt4Pt extends AbstractController
             } catch (TokenNotValidException $e) {
                 $message = $e->getMessage();
                 return $this->json(['error' => $message], Response::HTTP_NOT_FOUND);
-            }catch (QueuePurchaseTokenNotFoundException $e) {
+            } catch (QueuePurchaseTokenNotFoundException $e) {
                 $message = $e->getMessage();
                 return $this->json(['error' => $message], Response::HTTP_NOT_FOUND);
             }
@@ -45,6 +45,6 @@ class QueueExchangeQt4Pt extends AbstractController
             $message = $e->getMessage();
             return $this->json(['error' => $message], Response::HTTP_BAD_REQUEST);
         }
-        return $this->json(['Purchase token' => $purchaseToken]);
+        return $this->json(['purchase_token' => $purchaseToken]);
     }
 }

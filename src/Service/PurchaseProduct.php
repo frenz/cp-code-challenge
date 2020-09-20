@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Product;
 use App\Entity\Purchase;
 use App\Exception\ProductNotFoundException;
@@ -14,7 +13,6 @@ use Firebase\JWT\ExpiredException;
 
 class PurchaseProduct
 {
-
     private ProductRepository $productRepository;
     private EntityManagerInterface $em;
     private JWTProvider $JWTProvider;
@@ -78,6 +76,4 @@ class PurchaseProduct
 
         return $purchase;
     }
-
-
 }
