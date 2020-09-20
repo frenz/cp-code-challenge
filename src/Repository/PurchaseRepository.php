@@ -18,5 +18,4 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Purchase::class);
     }
-
 }
