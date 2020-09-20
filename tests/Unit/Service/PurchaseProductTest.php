@@ -4,7 +4,6 @@ namespace Tests\Unit\Service;
 
 use App\Entity\Product;
 use App\Entity\Purchase;
-use App\Exception\TokenNotValidException;
 use App\Repository\ProductRepository;
 use App\Service\JWTProvider;
 use App\Service\PurchaseProduct;
@@ -19,20 +18,20 @@ class PurchaseProductTest extends TestCase
      * @dataProvider providePayloadData
      *
      */
-    public function testWithNameAndPurchaseToken($purchaseToken, $productId): void
+    public function testWithNameAndPurchaseToken($purchaseToken, $productName): void
     {
-        $purchase = $this->purchaseProduct->withNameAndPurchaseToken($purchaseToken, $productId);
+        $purchase = $this->purchaseProduct->withNameAndPurchaseToken($purchaseToken, $productName);
         $this->assertInstanceOf(Purchase::class, $purchase);
     }
 
     public function providePayloadData()
     {
-        yield 'test1' => ['JWTPurchaseToken', 1];
-        yield 'test2' => ['JWTPurchaseToken', 2];
-        yield 'test3' => ['JWTPurchaseToken', 3];
-        yield 'test4' => ['JWTPurchaseToken', 4];
-        yield 'test5' => ['JWTPurchaseToken', 5];
-        yield 'test6' => ['JWTPurchaseToken', 6];
+        yield 'test1' => ['JWTPurchaseToken', 'Iphone 11'];
+        yield 'test2' => ['JWTPurchaseToken', 'Iphone 11'];
+        yield 'test3' => ['JWTPurchaseToken', 'Iphone 11'];
+        yield 'test4' => ['JWTPurchaseToken', 'Iphone 11'];
+        yield 'test5' => ['JWTPurchaseToken', 'Iphone 11'];
+        yield 'test6' => ['JWTPurchaseToken', 'Iphone 11'];
     }
 
     protected function setUp(): void
@@ -81,7 +80,7 @@ class PurchaseProductTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $productRepository->method('find')
+        $productRepository->method('findByName')
             ->willReturn($this->getMockProduct());
         return $productRepository;
     }

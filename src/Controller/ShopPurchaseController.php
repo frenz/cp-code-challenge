@@ -37,14 +37,14 @@ class ShopPurchaseController extends AbstractController
     {
         $body = json_decode($request->getContent()) ?? [];
         try {
-            if (empty($body) || !is_string($body->purchase_token ?? null) || !is_int($body->product_id ?? null)) {
+            if (empty($body) || !is_string($body->purchase_token ?? null) || !is_string($body->product_name ?? null)) {
                 throw new Exception(self::INVALID_REQUEST);
             }
             $token = $body->purchase_token;
-            $productId = (int)$body->product_id;
+            $productName = $body->product_name;
 
             try {
-                $purchase = $this->purchaseProduct->withNameAndPurchaseToken($token, $productId);
+                $purchase = $this->purchaseProduct->withNameAndPurchaseToken($token, $productName);
             } catch (ProductNotFoundException $e) {
                 return $this->json([self::ERROR_LABEL => $e->getMessage()], Response::HTTP_OK);
             } catch (ProductOutOfStockException $e) {

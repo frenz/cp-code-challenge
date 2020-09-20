@@ -26,20 +26,20 @@ class PurchaseProduct
 
     /**
      * @param string $purchaseToken
-     * @param int $productId
+     * @param string $productName
      * @return Purchase
      * @throws ProductNotFoundException
      * @throws ProductOutOfStockException
      * @throws TokenNotValidException
      * @throws ExpiredException
      */
-    public function withNameAndPurchaseToken(string $purchaseToken, int $productId): Purchase
+    public function withNameAndPurchaseToken(string $purchaseToken, string $productName): Purchase
     {
         $valid = $this->JWTProvider->validatePurchaseToken($purchaseToken);
         if (!$valid) {
             throw new TokenNotValidException('token not valid');
         }
-        $product = $this->getProduct($productId);
+        $product = $this->getProduct($productName);
 
         if ($product->isOutOfStock()) {
             throw new ProductOutOfStockException('Product is out of stock');
@@ -49,13 +49,13 @@ class PurchaseProduct
     }
 
     /**
-     * @param int $productId
+     * @param string $productName
      * @return Product
      * @throws ProductNotFoundException
      */
-    private function getProduct(int $productId): Product
+    private function getProduct(string $productName): Product
     {
-        $product = $this->productRepository->find($productId);
+        $product = $this->productRepository->findByName($productName);
 
         if (!$product instanceof Product) {
             throw new ProductNotFoundException('Product not found');
