@@ -24,7 +24,7 @@ class ProductFixture extends Fixture
     private function getFixtureData(): array
     {
         return [
-            "Iphone 11" => 3,
+            "Iphone 11" => 100,
             "Iphone x" => 2,
             "Iphone 5" => 0,
         ];
