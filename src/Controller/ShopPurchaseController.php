@@ -21,6 +21,10 @@ use Throwable;
  */
 class ShopPurchaseController extends AbstractController
 {
+    const INVALID_REQUEST = 'Invalid request';
+    const ERROR_LABEL = 'error';
+    const SUCCESS_LABEL = 'success';
+    const TOKEN_EXPIRED_MESSAGE = 'Token expired';
     private PurchaseProduct $purchaseProduct;
 
     public function __construct(PurchaseProduct $purchaseProduct)
@@ -34,7 +38,7 @@ class ShopPurchaseController extends AbstractController
         $body = json_decode($request->getContent()) ?? [];
         try {
             if (empty($body) || !is_string($body->purchase_token ?? null) || !is_int($body->product_id ?? null)) {
-                throw new Exception('Invalid request');
+                throw new Exception(self::INVALID_REQUEST);
             }
             $token = $body->purchase_token;
             $productId = (int)$body->product_id;
@@ -42,18 +46,18 @@ class ShopPurchaseController extends AbstractController
             try {
                 $purchase = $this->purchaseProduct->withNameAndPurchaseToken($token, $productId);
             } catch (ProductNotFoundException $e) {
-                return $this->json(['error' => $e->getMessage()], Response::HTTP_OK);
+                return $this->json([self::ERROR_LABEL => $e->getMessage()], Response::HTTP_OK);
             } catch (ProductOutOfStockException $e) {
-                return $this->json(['error' => $e->getMessage()], Response::HTTP_OK);
+                return $this->json([self::ERROR_LABEL => $e->getMessage()], Response::HTTP_OK);
             } catch (TokenNotValidException $e) {
-                return $this->json(['error' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+                return $this->json([self::ERROR_LABEL => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
             } catch (ExpiredException $e) {
-                return $this->json(['error' => 'Token expired'], Response::HTTP_UNAUTHORIZED);
+                return $this->json([self::ERROR_LABEL => self::TOKEN_EXPIRED_MESSAGE], Response::HTTP_UNAUTHORIZED);
             }
         } catch (Throwable $e) {
             $message = $e->getMessage();
-            return $this->json(['error' => $message], Response::HTTP_BAD_REQUEST);
+            return $this->json([self::ERROR_LABEL => $message], Response::HTTP_BAD_REQUEST);
         }
-        return $this->json(['success' => $purchase instanceof Purchase]);
+        return $this->json([self::SUCCESS_LABEL => $purchase instanceof Purchase]);
     }
 }

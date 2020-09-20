@@ -16,7 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class QueueEnterController extends AbstractController
 {
 //    private const SERVER_ERROR = 'Server error';
-    private const EMPTY_RESPONSE = '';
+    private const EMPTY_MESSAGE = '';
+    const QUEUE_TOKEN_LABEL = 'queue_token';
     private MessageBusInterface $messageBus;
     private JWTProvider $JWTProvider;
 
@@ -34,9 +35,8 @@ class QueueEnterController extends AbstractController
         } catch (TransportException $e) {
 //            return $this->json(['error' => self::SERVER_ERROR], Response::HTTP_INTERNAL_SERVER_ERROR);
 //            Response is negative if the queue is not ready , full etc, there is an error with a message for the user
-            return $this->json(self::EMPTY_RESPONSE);
+            return $this->json(self::EMPTY_MESSAGE);
         }
-        return $this->json(['queue_token' => $token]);
+        return $this->json([self::QUEUE_TOKEN_LABEL => $token]);
     }
-
 }
