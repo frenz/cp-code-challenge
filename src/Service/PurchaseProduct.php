@@ -10,6 +10,7 @@ use App\Exception\ProductOutOfStockException;
 use App\Exception\TokenNotValidException;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Firebase\JWT\ExpiredException;
 
 class PurchaseProduct
 {
@@ -32,6 +33,7 @@ class PurchaseProduct
      * @throws ProductNotFoundException
      * @throws ProductOutOfStockException
      * @throws TokenNotValidException
+     * @throws ExpiredException
      */
     public function withNameAndPurchaseToken(string $purchaseToken, int $productId): Purchase
     {
