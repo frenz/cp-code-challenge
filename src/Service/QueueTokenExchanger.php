@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\QueuePurchaseToken;
 use App\Exception\QueuePurchaseTokenNotFoundException;
 use App\Exception\TokenNotValidException;

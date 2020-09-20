@@ -17,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QueueExchangeQt4Pt extends AbstractController
 {
+    const PURCHASE_TOKEN_LABEL = 'purchase_token';
+    const ERROR_LABEL = 'error';
+    const INVALID_REQUEST = 'Invalid request';
     private QueueTokenExchanger $queueTokenExchanger;
 
     public function __construct(QueueTokenExchanger $queueTokenExchanger)
@@ -29,22 +32,22 @@ class QueueExchangeQt4Pt extends AbstractController
         $body = json_decode($request->getContent()) ?? [];
         try {
             if (empty($body) || !is_string($body->queue_token ?? null)) {
-                throw new Exception('Invalid request');
+                throw new Exception(self::INVALID_REQUEST);
             }
             try {
                 $token = $body->queue_token;
                 $purchaseToken = $this->queueTokenExchanger->exchangeForPurchaseToken($token);
             } catch (TokenNotValidException $e) {
                 $message = $e->getMessage();
-                return $this->json(['error' => $message], Response::HTTP_NOT_FOUND);
-            }catch (QueuePurchaseTokenNotFoundException $e) {
+                return $this->json([self::ERROR_LABEL => $message], Response::HTTP_NOT_FOUND);
+            } catch (QueuePurchaseTokenNotFoundException $e) {
                 $message = $e->getMessage();
-                return $this->json(['error' => $message], Response::HTTP_NOT_FOUND);
+                return $this->json([self::ERROR_LABEL => $message], Response::HTTP_NOT_FOUND);
             }
         } catch (Exception $e) {
             $message = $e->getMessage();
-            return $this->json(['error' => $message], Response::HTTP_BAD_REQUEST);
+            return $this->json([self::ERROR_LABEL => $message], Response::HTTP_BAD_REQUEST);
         }
-        return $this->json(['Purchase token' => $purchaseToken]);
+        return $this->json([self::PURCHASE_TOKEN_LABEL => $purchaseToken]);
     }
 }

@@ -23,5 +23,4 @@ class QueuePurchaseTokenRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['queueToken' => $queueToken]);
     }
-
 }

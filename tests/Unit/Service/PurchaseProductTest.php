@@ -25,7 +25,7 @@ class PurchaseProductTest extends TestCase
         $this->assertInstanceOf(Purchase::class, $purchase);
     }
 
-    function providePayloadData()
+    public function providePayloadData()
     {
         yield 'test1' => ['JWTPurchaseToken', 1];
         yield 'test2' => ['JWTPurchaseToken', 2];

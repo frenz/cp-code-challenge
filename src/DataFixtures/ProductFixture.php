@@ -10,8 +10,7 @@ class ProductFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        foreach ($this->getFixtureData() as $name => $stock)
-        {
+        foreach ($this->getFixtureData() as $name => $stock) {
             $product = new Product($name, $stock);
             $manager->persist($product);
         }
