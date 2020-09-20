@@ -57,6 +57,11 @@ WORKDIR /var/www/public
 
 RUN chown -R www-data:users ./
 
+RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer \
+    && sudo chmod a+x php-cs-fixer \
+    && mv php-cs-fixer /usr/local/bin/php-cs-fixer \
+    && chown -R www-data:users /usr/local/bin/php-cs-fixer
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["php-fpm"]
