@@ -14,7 +14,9 @@
     "doctrine/doctrine-migrations-bundle": "^3.0",
     "doctrine/orm": "^2.7",
     "firebase/php-jwt": "^5.2",
+    "nelmio/api-doc-bundle": "^3.0",
     "phpdocumentor/reflection-docblock": "^5.2",
+    "symfony/asset": "4.4.*",
     "symfony/console": "*",
     "symfony/flex": "^1.1",
     "symfony/framework-bundle": "*",
@@ -22,7 +24,10 @@
     "symfony/property-access": "4.4.*",
     "symfony/property-info": "4.4.*",
     "symfony/serializer": "4.4.*",
-    "symfony/yaml": "*"
+    "symfony/twig-bundle": "4.4.*",
+    "symfony/yaml": "*",
+    "twig/extra-bundle": "^2.12|^3.0",
+    "twig/twig": "^2.12|^3.0"
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^3.3",
